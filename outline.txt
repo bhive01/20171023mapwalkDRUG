@@ -1,0 +1,27 @@
+Intro
+
+A lot of what we do as humans is break down complex problems into pieces that can be repeated. This increases efficiency and allows us to focus on more complex problems. 
+
+Iteration helps us deal with these repetitive tasks. 
+
+Iteration in R
+R let's you do things in many different ways
+Package system allows this to be extended in infinite ways.
+
+
+
+For loops
+seqalong
+apply family
+data.table (don't know how to do this, but should show an example)
+
+Tidyverse:purrr:: Map/Walk Family
+
+
+
+
+
+
+
+
+
