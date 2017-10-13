@@ -18,6 +18,26 @@ data.table (don't know how to do this, but should show an example)
 Tidyverse:purrr:: Map/Walk Family
 
 
+Steph suggested a read in documents example with map_df
+http://data.library.virginia.edu/getting-started-with-the-purrr-package-in-r/
+Mix with this your new readtxtfromfolder2() function to import filenames and timestamps as columns
+
+Jenny has a huge purrr site 
+https://jennybc.github.io/purrr-tutorial/
+Specific page mentioning how you can use the various functions
+https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html
+
+What else have I used it for? 
+Nested datasets, iterate over them and do stuff.
+Iterate over them and plot
+iterate over them and print a paragraph about the plot and its data in an RmD
+
+
+
+Should mention how you use map, map2, pmap
+map = ., map2 = .x;.y, pmap = .1;.2;.3;etc...
+This was difficult for me to figure out, spend some time on it. 
+
 
 
 
