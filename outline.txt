@@ -38,9 +38,30 @@ Should mention how you use map, map2, pmap
 map = ., map2 = .x;.y, pmap = .1;.2;.3;etc...
 This was difficult for me to figure out, spend some time on it. 
 
+Datacamp functional programming...
 
+Dataframe is a list of lists/vector
+map() iterates over this list
+Show a list that contains numeric vectors first
+l = list(a=1:10, b = 10:100)
+map(l, function(x) mean(x, na.rm = TRUE))
 
+map can iterate over an atomic vector (simplist case? show first?)
+vec <- c(a=2, c= 5)
 
+handy shortcuts listed as a positive, but really only useful if you "get it"
+The map functions use the ... ("dot dot dot") argument to pass along additional arguments to .f each time it’s called. For example, we can pass the trim argument to the mean() function:
+
+map_dbl(df, mean, trim = 0.5)
+Multiple arguments can be passed along using commas to separate them. For example, we can also pass the na.rm argument to mean():
+
+map_dbl(df, mean, trim = 0.5, na.rm = TRUE)
+You don't have to specify the arguments by name, but it is good practice!
+
+You may be wondering why the arguments to map() are .x and .f and not x and f? It's because .x and .f are very unlikely to be argument names you might pass through the ..., thereby preventing confusion about whether an argument belongs to map() or to the function being mapped.
+
+supplying as a formula
+~ sum(is.na(.)) The . takes the place of the argument. (I hate this. It's not clear.)
 
 
 
