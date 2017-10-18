@@ -64,5 +64,21 @@ supplying as a formula
 ~ sum(is.na(.)) The . takes the place of the argument. (I hate this. It's not clear.)
 
 
+map2(.x, .y, .f, ...)
+pmap(.l, .f, ...)
+with pmap, you can name the parts directly to what they should be in the function. 
+example on datacamp is with rnorm(n, mean, sd)
+list1 <- list(n =    list(5,10,20),
+              mean = list(5,10, 20),
+               sd =  list(0.1, 0.2, 0.3)
+              )
+ pmap(list1, rnorm)
+ because they are named the same I assume you can mix them up and they go in the right place (need to check this)
+ if they are not named, the should go in order? (also need to check this)
+ 
+ finally, you can call them via the function call (check my example in pwalk for how)
+              
+
+
 
 
