@@ -129,3 +129,26 @@ params <- list(
 invoke_map(f, params, n = 5)
 
 
+Walk/walk2/pwalk
+Same concept but output is a "side effect" = plot, print...
+
+The return value of a walk function is the input so you can output something and then continue to do something with it, in a chain. 
+Hadley's advice is to keep chains < 10 verbs' long. Typically for me a walk is the final thing I want done. 
+Charlotte's example is that of printing a list one by one and then measuring it's length with map_dbl()
+
+# Define list of functions
+f <- list(Normal = "rnorm", Uniform = "runif", Exp = "rexp")
+
+# Define params
+params <- list(
+  Normal = list(mean = 10),
+  Uniform = list(min = 0, max = 5),
+  Exp = list(rate = 5)
+)
+
+# Assign the simulated samples to sims
+sims <- invoke_map(f, params, n = 50)
+
+# Use walk() to make a histogram of each element in sims
+walk(sims, hist)
+
