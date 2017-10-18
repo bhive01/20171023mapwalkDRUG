@@ -73,12 +73,59 @@ list1 <- list(n =    list(5,10,20),
                sd =  list(0.1, 0.2, 0.3)
               )
  pmap(list1, rnorm)
- because they are named the same I assume you can mix them up and they go in the right place (need to check this)
- if they are not named, the should go in order? (also need to check this)
+ because they are named the same I assume you can mix them up and they go in the right place (nope! POSITIONAL MATCHING IF NAMES ARE NOT MATCHED)
+ Compare the following two calls to pmap() (run them in the console and compare their output too!):
+
+pmap(list(n, mu, sd), rnorm)
+pmap(list(mu, n, sd), rnorm)
+What's the difference? By default pmap() matches the elements of the list to the arguments in the function by position. In the first case, n to the n argument of rnorm(), mu to the mean argument of rnorm(), and sd to the sd argument of rnorm(). In the second case mu gets matched to the n argument of rnorm(), which is clearly not what we intended!
+
+Instead of relying on this positional matching, a safer alternative is to provide names in our list. The name of each element should be the argument name we want to match it to.
+
+
+ pmap(list(mean=mu, n=n, sd=sd), rnorm) #name of argument comes first, then list that you're pulling in. 
+
+ if they are not named, the should go in order? (yes, positional)
  
- finally, you can call them via the function call (check my example in pwalk for how)
-              
+ finally, you can call them via the function call like this:
+ pmap(list(mu, n, sd), function(mu, n, sd) rnorm(n, mu, sd))  
+ 
+ 
+Shit... invoke_map(.f, .x, ...)
+reverses the order of the call. .f is first and is a list of function names, .x is a list of the arguments to the various functions (if they differ), if they don't differ you can pass that through with `...`. 
+Sometimes it's not the arguments to a function you want to iterate over, but a set of functions themselves. Imagine that instead of varying the parameters to rnorm() we want to simulate from different distributions, say, using rnorm(), runif(), and rexp(). How do we iterate over calling these functions?
+
+In purrr, this is handled by the invoke_map() function. The first argument is a list of functions. In our example, something like:
+
+f <- list("rnorm", "runif", "rexp")
+The second argument specifies the arguments to the functions. In the simplest case, all the functions take the same argument, and we can specify it directly, relying on ... to pass it to each function. In this case, call each function with the argument n = 5:
+
+invoke_map(f, n = 5)
+In more complicated cases, the functions may take different arguments, or we may want to pass different values to each function. In this case, we need to supply invoke_map() with a list, where each element specifies the arguments to the corresponding function.
+
+Let's use this approach to simulate three samples from the following three distributions: Normal(10, 1), Uniform(0, 5), and Exponential(5).
 
 
+# Define list of functions
+f <- list("rnorm", "runif", "rexp")
+
+# Parameter list for rnorm()
+rnorm_params <- list(mean = 10)
+
+# Add a min element with value 0 and max element with value 5
+runif_params <- list(min = 0, max = 5)
+
+# Add a rate element with value 5
+rexp_params <- list(rate = 5)
+
+# Define params for each function
+params <- list(
+  rnorm_params,
+  runif_params,
+  rexp_params
+)
+
+# Call invoke_map() on f supplying params as the second argument
+invoke_map(f, params, n = 5)
 
 
