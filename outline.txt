@@ -1,21 +1,164 @@
 Intro
 
+writing a function in R
+  Basic function structure
+  name <- function(arguments (inputs)) {body, output}
+  return() isn't always necessary, last thing is returned
+  
+Environments... might skip this... It's important generally, but I think it's too much. 
+
+two types of vectors
+*Atomic
+lgl, int, dbl, chr, complex?, raw?
+factor is an INT with names... WTF!? 
+"augmented vectors" with added attributes
+"complex data structures"
+"Homogenous"
+Restricted types. Vector that is atomic only has that type of contents. You cannot mix them.
+
+NULL means the absence of an entire vector
+NA means the absence of a singular value. (Each atomic type has its own NA)
+from ?NA
+NA is a logical constant of length 1 which contains a missing value indicator. NA can be coerced to any other vector type except raw. There are also constants NA_integer_, NA_real_ (dbl), NA_complex_ and NA_character_ of the other atomic vector types which support missing values: all of these are reserved words in the R language.
+NA is NA_logical... there is no other name for it. 
+
+
+*Lists
+Can be "heterogenous"
+Can contain anything... Even more lists. 
+
+subsetting
+`[[`
+`[`
+`$`
+Interesting... maybe skip this too
+Except the image of a list could be useful in explaining what a data.frame/tibble is 
 A lot of what we do as humans is break down complex problems into pieces that can be repeated. This increases efficiency and allows us to focus on more complex problems. 
-
-Iteration helps us deal with these repetitive tasks. 
-
-Iteration in R
 R let's you do things in many different ways
 Package system allows this to be extended in infinite ways.
 
 
+Iteration in R
+Iteration helps us deal with these repetitive tasks.
 
-For loops
-seqalong
-apply family
-data.table (don't know how to do this, but should show an example)
+For Loops
+output #define this to store your result
+for (sequence) {
+  body
+  output # if you just print, then the output is printed to the screen
+}
+
+df <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+For Loop
+for (i in 1:ncol(df)) {
+  print(median(df[[i]]))
+}
+Same thing with seq_along
+Why is this safer? Is this relevant to this audience? Mention, but glaze?
+?base::seq_along or ?seq
+for (i in seq_along(df)) {
+   print(median(df[[i]]))
+}
+
+Why write a function?
+
+Copying and pasting code is fine
+df$a <- (df$a - min(df$a, na.rm = TRUE)) /  
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$b <- (df$b - min(df$b, na.rm = TRUE)) /  
+  (max(df$b, na.rm = TRUE) - min(df$b, na.rm = TRUE))
+df$c <- (df$c - min(df$a, na.rm = TRUE)) /  
+  (max(df$c, na.rm = TRUE) - min(df$c, na.rm = TRUE))
+df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+  
+This is a legitimate approach, but it is error prone and doesn't easily enable you to see what you're doing.
+
+When to write a function?
+Hadley's advice is when you copy and paste something twice (you have 3 repeats with different variables)
+rescale01 <-
+  function(x) {
+    (x - min(x, na.rm = TRUE)) /
+    (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+  }
+Then:
+df$a <- rescale01(df$a)
+df$b <- rescale01(df$b)
+df$c <- rescale01(df$c)
+df$d <- rescale01(df$d)
+
+Do you see the repetition here? 
 
 Tidyverse:purrr:: Map/Walk Family
+map allows us to do this
+map(df, rescale01)
+
+Also, base::lapply
+lapply(df, rescale01)
+
+data.table (don't know how to do this, but it's possible)
+
+**summary of how you should write a function**
+Simplify your problem (do one thing really well)
+Make a working snippet
+Convert snippet to use a generic input (function arguments)
+simplify if you can
+Make this a function "name <- function(arguments) {}
+
+She uses the code from above to prove this point. Perhaps we could skip over this or scroll through it. 
+
+Good function is
+Correct and understandable (to humans as well as the computer)
+I think this is probably skippable so we can get to map/walk sooner.
+
+naming principles... Definitely skippable or at least a single slide with best practices. 
+styles vary
+Tidy style = 
+all lower case
+sep_by_low_bar
+Be consistent
+function name should say what it does (why not a verb)
+argument name should be a noun (things)
+don't smash override existing functions or names
+argument order: data first, then details (parameters)
+  Data first is because tidyverse functions assume this standard!
+Pick reasonable default values where appropriate
+
+
+  Uses cupcake concept
+  
+for loop is cupcake recipes for vanilla and chocolate
+code is super repeated
+makes it hard to see what is important and what is different between things (very little)
+shows two for loops
+out1 <- vector("double", ncol(mtcars)) #variable of the right type to store results
+for (i in seq_along(mtcars)) {
+  out1[i] <- mean(mtcars[[i]], na.rm = TRUE)
+}
+
+out2 <- vector("double", ncol(mtcars)) #variable of the right type to store results
+for (i in seq_along(mtcars)) {
+  out2[i] <- median(mtcars[[i]], na.rm = TRUE)
+}
+
+functions can be arguments just like anything else!
+
+
+
+
+
+
+
+ 
+
+
+
+
 
 
 Steph suggested a read in documents example with map_df
