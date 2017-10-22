@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Presentation Ninja</title>
+    <title>Introduction to functional programming with map &amp; walk</title>
     <meta charset="utf-8">
-    <meta name="author" content="Yihui Xie" />
+    <meta name="author" content="Brandon Hurr" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/fonts.css" rel="stylesheet" />
   </head>
@@ -11,30 +11,90 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Presentation Ninja
-## ⚔<br/>with xaringan
-### Yihui Xie
-### 2016/12/12
+# Introduction to functional programming with map &amp; walk
+## 🐱<br/>with purrr
+### Brandon Hurr
+### 2017/10/26
 
 ---
 
 
 
 
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
+# Outline
 
-???
+- Basic data structures in R
 
-Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
+- Why and when to write a function in R
+
+- Functional Programming
+
+- purrr::map
+
+- purrr::walk
 
 ---
-class: center, middle
+class: inverse, center, middle
 
-# xaringan
-
-### /ʃæ.'riŋ.ɡæn/
+# Data structures in R
 
 ---
+
+# Atomic Vectors
+
+Simple and strict; one data type at a time
+- Used a lot
+  - Logical 
+  - Integer
+  - Real (double, float)
+  - Character
+
+- Skipping these 
+  - Complex
+  - Raw
+
+
+--
+
+- What about factor? 
+  - Integer vector with labels (levels)
+
+--
+
+Each type has its own NA
+
+
+`NA` (logical), `NA_integer_`, `NA_real_`, `NA_character`, `NA_complex_`, `0` (raw)
+
+
+---
+
+# Lists
+List can contain any of the atomic vectors AND lists!
+.pull-left[
+
+```r
+# a simple list
+a &lt;- list(a = 1:3
+        , b = "a string"
+        , c = pi
+        , d = list(-1, -5))
+```
+
+Data frames are special types of lists.
+
+
+]
+  
+.pull-right[
+![](figures/lists-example.png)
+
+Image credit: [R4DS](http://r4ds.had.co.nz/lists.html)
+]
+
+
+---
+
 class: inverse, center, middle
 
 # Get Started
@@ -133,6 +193,8 @@ output:
     yolo: true
     nature:
       autoplay: 30000
+---
+background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
 ---
 ```
 
