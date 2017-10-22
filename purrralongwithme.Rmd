@@ -4,7 +4,7 @@ output: html_notebook
 ---
 
 Data types
-```{r data types}
+```{r vector intiation}
 #initiate blank vectors of a specific type
 #this can be useful when capturing data from for loops
 a <- vector("logical", 5)
@@ -12,16 +12,28 @@ b <- vector("integer", 5)
 c <- vector("double", 5)
 d <- vector("character", 5)
 e <- list()
+```
 
+```{r NA NA NA NA NA NA NA NA Batman}
+#what do the NAs look like?
+list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_)
+#not very exciting
+```
+
+```{r Vectors Victor}
 # let's put actual values into these
-a <- c(TRUE, FALSE, TRUE, FALSE, FALSE) #seems logical 
-b <- c(1:5) #Integers
-c <- rnorm(5) #pull doubles from normal distribution
-d <- LETTERS[1:5] #first 5 capital letters
+a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) #seems logical 
+b <- c(1:5, NA_integer_) #Integers
+c <- c(rnorm(5), NA_real_) #pull doubles from normal distribution
+d <- c(LETTERS[1:5], NA_character_) #first 5 capital letters
+
 e <- list(a, b, c, d) #make a list
 
 e # check it twix
 ```
+
+
+
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 

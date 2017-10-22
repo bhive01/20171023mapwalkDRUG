@@ -175,34 +175,67 @@ $(document).ready(function () {
 <p>Data types</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luaXRpYXRlIGJsYW5rIHZlY3RvcnMgb2YgYSBzcGVjaWZpYyB0eXBlXG4jdGhpcyBjYW4gYmUgdXNlZnVsIHdoZW4gY2FwdHVyaW5nIGRhdGEgZnJvbSBmb3IgbG9vcHNcbmEgPC0gdmVjdG9yKFwibG9naWNhbFwiLCA1KVxuYiA8LSB2ZWN0b3IoXCJpbnRlZ2VyXCIsIDUpXG5jIDwtIHZlY3RvcihcImRvdWJsZVwiLCA1KVxuZCA8LSB2ZWN0b3IoXCJjaGFyYWN0ZXJcIiwgNSlcbmUgPC0gbGlzdCgpXG4jIGxldCdzIHB1dCBhY3R1YWwgdmFsdWVzIGludG8gdGhlc2VcbmEgPC0gYyhUUlVFLCBGQUxTRSwgVFJVRSwgRkFMU0UsIEZBTFNFKSAjc2VlbXMgbG9naWNhbFxuYiA8LSBjKDE6NSkgI0ludGVnZXJzXG5jIDwtIHJub3JtKDUpICNwdWxsIGRvdWJsZXMgZnJvbSBub3JtYWwgZGlzdHJpYnV0aW9uXG5kIDwtIExFVFRFUlNbMTo1XSAjZmlyc3QgNSBjYXBpdGFsIGxldHRlcnNcbmUgPC0gbGlzdChhLCBiLCBjLCBkKSAjbWFrZSBhIGxpc3RcbmUgIyBjaGVjayBpdCB0d2l4XG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luaXRpYXRlIGJsYW5rIHZlY3RvcnMgb2YgYSBzcGVjaWZpYyB0eXBlXG4jdGhpcyBjYW4gYmUgdXNlZnVsIHdoZW4gY2FwdHVyaW5nIGRhdGEgZnJvbSBmb3IgbG9vcHNcbmEgPC0gdmVjdG9yKFwibG9naWNhbFwiLCA1KVxuYiA8LSB2ZWN0b3IoXCJpbnRlZ2VyXCIsIDUpXG5jIDwtIHZlY3RvcihcImRvdWJsZVwiLCA1KVxuZCA8LSB2ZWN0b3IoXCJjaGFyYWN0ZXJcIiwgNSlcbmUgPC0gbGlzdCgpXG5gYGAifQ== -->
 <pre class="r"><code>#initiate blank vectors of a specific type
 #this can be useful when capturing data from for loops
 a &lt;- vector(&quot;logical&quot;, 5)
 b &lt;- vector(&quot;integer&quot;, 5)
 c &lt;- vector(&quot;double&quot;, 5)
 d &lt;- vector(&quot;character&quot;, 5)
-e &lt;- list()
-# let's put actual values into these
-a &lt;- c(TRUE, FALSE, TRUE, FALSE, FALSE) #seems logical
-b &lt;- c(1:5) #Integers
-c &lt;- rnorm(5) #pull doubles from normal distribution
-d &lt;- LETTERS[1:5] #first 5 capital letters
+e &lt;- list()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3doYXQgZG8gdGhlIE5BcyBsb29rIGxpa2U/XG5saXN0KE5BLCBOQV9pbnRlZ2VyXywgTkFfcmVhbF8sIE5BX2NoYXJhY3Rlcl8sIE5BX2NvbXBsZXhfKVxuYGBgIn0= -->
+<pre class="r"><code>#what do the NAs look like?
+list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSBOQVxuXG5bWzJdXVxuWzFdIE5BXG5cbltbM11dXG5bMV0gTkFcblxuW1s0XV1cblsxXSBOQVxuXG5bWzVdXVxuWzFdIE5BXG4ifQ== -->
+<pre><code>[[1]]
+[1] NA
+
+[[2]]
+[1] NA
+
+[[3]]
+[1] NA
+
+[[4]]
+[1] NA
+
+[[5]]
+[1] NA</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI25vdCB2ZXJ5IGV4Y2l0aW5nXG5gYGAifQ== -->
+<pre class="r"><code>#not very exciting</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsZXQncyBwdXQgYWN0dWFsIHZhbHVlcyBpbnRvIHRoZXNlXG5hIDwtIGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBGQUxTRSwgTkEpICNzZWVtcyBsb2dpY2FsIFxuYiA8LSBjKDE6NSwgTkFfaW50ZWdlcl8pICNJbnRlZ2Vyc1xuYyA8LSBjKHJub3JtKDUpLCBOQV9yZWFsXykgI3B1bGwgZG91YmxlcyBmcm9tIG5vcm1hbCBkaXN0cmlidXRpb25cbmQgPC0gYyhMRVRURVJTWzE6NV0sIE5BX2NoYXJhY3Rlcl8pICNmaXJzdCA1IGNhcGl0YWwgbGV0dGVyc1xuZSA8LSBsaXN0KGEsIGIsIGMsIGQpICNtYWtlIGEgbGlzdFxuZSAjIGNoZWNrIGl0IHR3aXhcbmBgYCJ9 -->
+<pre class="r"><code># let's put actual values into these
+a &lt;- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) #seems logical 
+b &lt;- c(1:5, NA_integer_) #Integers
+c &lt;- c(rnorm(5), NA_real_) #pull doubles from normal distribution
+d &lt;- c(LETTERS[1:5], NA_character_) #first 5 capital letters
 e &lt;- list(a, b, c, d) #make a list
 e # check it twix</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAgVFJVRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRVxuXG5bWzJdXVxuWzFdIDEgMiAzIDQgNVxuXG5bWzNdXVxuWzFdIC0wLjc1Mjc5NzcwIC0wLjcyNzIzMDU5IC0wLjM1NDU3NTI3IC0wLjAzNTE3NzM5IC0wLjU3ODM5MzcwXG5cbltbNF1dXG5bMV0gXCJBXCIgXCJCXCIgXCJDXCIgXCJEXCIgXCJFXCJcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAgVFJVRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSAgICBOQVxuXG5bWzJdXVxuWzFdICAxICAyICAzICA0ICA1IE5BXG5cbltbM11dXG5bMV0gIDAuNDc2NzU3MSAtMC41Nzg5ODM1IC0xLjYyOTcxODMgIDEuODk1MDI3NSAtMC4yNDA0NDczICAgICAgICAgTkFcblxuW1s0XV1cblsxXSBcIkFcIiBcIkJcIiBcIkNcIiBcIkRcIiBcIkVcIiBOQSBcbiJ9 -->
 <pre><code>[[1]]
-[1]  TRUE FALSE  TRUE FALSE FALSE
+[1]  TRUE FALSE  TRUE FALSE FALSE    NA
 
 [[2]]
-[1] 1 2 3 4 5
+[1]  1  2  3  4  5 NA
 
 [[3]]
-[1] -0.75279770 -0.72723059 -0.35457527 -0.03517739 -0.57839370
+[1]  0.4767571 -0.5789835 -1.6297183  1.8950275 -0.2404473         NA
 
 [[4]]
-[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;</code></pre>
+[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; NA </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -220,7 +253,7 @@ e # check it twix</code></pre>
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGF0YSB0eXBlcwpgYGB7ciBkYXRhIHR5cGVzfQojaW5pdGlhdGUgYmxhbmsgdmVjdG9ycyBvZiBhIHNwZWNpZmljIHR5cGUKI3RoaXMgY2FuIGJlIHVzZWZ1bCB3aGVuIGNhcHR1cmluZyBkYXRhIGZyb20gZm9yIGxvb3BzCmEgPC0gdmVjdG9yKCJsb2dpY2FsIiwgNSkKYiA8LSB2ZWN0b3IoImludGVnZXIiLCA1KQpjIDwtIHZlY3RvcigiZG91YmxlIiwgNSkKZCA8LSB2ZWN0b3IoImNoYXJhY3RlciIsIDUpCmUgPC0gbGlzdCgpCgojIGxldCdzIHB1dCBhY3R1YWwgdmFsdWVzIGludG8gdGhlc2UKYSA8LSBjKFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgRkFMU0UpICNzZWVtcyBsb2dpY2FsIApiIDwtIGMoMTo1KSAjSW50ZWdlcnMKYyA8LSBybm9ybSg1KSAjcHVsbCBkb3VibGVzIGZyb20gbm9ybWFsIGRpc3RyaWJ1dGlvbgpkIDwtIExFVFRFUlNbMTo1XSAjZmlyc3QgNSBjYXBpdGFsIGxldHRlcnMKZSA8LSBsaXN0KGEsIGIsIGMsIGQpICNtYWtlIGEgbGlzdAoKZSAjIGNoZWNrIGl0IHR3aXgKYGBgCgpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiAKClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLiAKCmBgYHtyfQpwbG90KGNhcnMpCmBgYAoKQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkNtZCtPcHRpb24rSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkNtZCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLiAKClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGF0YSB0eXBlcwpgYGB7ciB2ZWN0b3IgaW50aWF0aW9ufQojaW5pdGlhdGUgYmxhbmsgdmVjdG9ycyBvZiBhIHNwZWNpZmljIHR5cGUKI3RoaXMgY2FuIGJlIHVzZWZ1bCB3aGVuIGNhcHR1cmluZyBkYXRhIGZyb20gZm9yIGxvb3BzCmEgPC0gdmVjdG9yKCJsb2dpY2FsIiwgNSkKYiA8LSB2ZWN0b3IoImludGVnZXIiLCA1KQpjIDwtIHZlY3RvcigiZG91YmxlIiwgNSkKZCA8LSB2ZWN0b3IoImNoYXJhY3RlciIsIDUpCmUgPC0gbGlzdCgpCmBgYAoKYGBge3IgTkEgTkEgTkEgTkEgTkEgTkEgTkEgTkEgQmF0bWFufQojd2hhdCBkbyB0aGUgTkFzIGxvb2sgbGlrZT8KbGlzdChOQSwgTkFfaW50ZWdlcl8sIE5BX3JlYWxfLCBOQV9jaGFyYWN0ZXJfLCBOQV9jb21wbGV4XykKI25vdCB2ZXJ5IGV4Y2l0aW5nCmBgYAoKYGBge3IgVmVjdG9ycyBWaWN0b3J9CiMgbGV0J3MgcHV0IGFjdHVhbCB2YWx1ZXMgaW50byB0aGVzZQphIDwtIGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBGQUxTRSwgTkEpICNzZWVtcyBsb2dpY2FsIApiIDwtIGMoMTo1LCBOQV9pbnRlZ2VyXykgI0ludGVnZXJzCmMgPC0gYyhybm9ybSg1KSwgTkFfcmVhbF8pICNwdWxsIGRvdWJsZXMgZnJvbSBub3JtYWwgZGlzdHJpYnV0aW9uCmQgPC0gYyhMRVRURVJTWzE6NV0sIE5BX2NoYXJhY3Rlcl8pICNmaXJzdCA1IGNhcGl0YWwgbGV0dGVycwoKZSA8LSBsaXN0KGEsIGIsIGMsIGQpICNtYWtlIGEgbGlzdAoKZSAjIGNoZWNrIGl0IHR3aXgKYGBgCgoKCgpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiAKClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLiAKCmBgYHtyfQpwbG90KGNhcnMpCmBgYAoKQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkNtZCtPcHRpb24rSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkNtZCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLiAKClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCg==</div>
 
 
 
