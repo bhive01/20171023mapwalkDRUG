@@ -38,7 +38,10 @@ list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_)
 The NULL element
 ``` {r NULLs}
 # NULL is the absence of a vector
+a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) # logical vector 
+a
 a <- NULL
+a
 
 mtcars
 mtcars[1] <- NULL #this gets rid of the mpg coloumn completely
@@ -72,9 +75,54 @@ df
 #tibbles are a strict type of data.frame
 as_tibble(df)
 # with slightly more informative printing
+```
+
+
+Getting at variables inside lists/dataframes/tibbles
+``` {r list_df_tibble_subsetting} 
+e <- list(a = a, b= b, c = c, d = d) #make a named list
+# single brackets returns a list with that element in it
+# can reference by location
+e[1]
+# or name
+e["a"]
+
+# double brackets returns a vector
+e[[2]]
+e[["b"]]
+
+#dolla dolla bills y'all (same thing)
+e$c
+
+#same for dataframes and tibbles
+mtcars[1]
+mtcars[[1]]
+
+
+
 
 
 ```
+
+
+
+
+``` {r functionbasics}
+#basic struction is assignment, definition, arguments, body, output
+addxy <- function(x, y) {
+  out <- x+y
+  out
+}
+addxy(1,2)
+
+# anonymous functions are not assigned, but are used in place
+# we will see this more later with dplyr and purrr
+function(x) {x+1}
+
+```
+
+
+
 
 
 

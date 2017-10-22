@@ -107,6 +107,50 @@ class: inverse, center, middle
 
 ---
 
+Subsetting Lists/Dataframes/Tibbles
+
+This is a very complex area
+`[`
+`[[`
+`$`
+
+
+
+http://adv-r.had.co.nz/Subsetting.html
+
+
+
+
+---
+# Functions in R
+
+``` {r functionexample}
+function01 <- function(argument1, argument2, ...) {
+  #body where you do stuff
+  #output
+}
+```
+
+- Assignment
+
+`function1 <-`
+
+- Definition
+
+`function() {}`
+
+- Arguments
+
+- Body
+
+- Output
+  - last object is returned
+  - can return something earlier with `return()`
+
+Functions are just like other objects. You can reference them with `<-` and use them in other functions.
+
+
+---
 # Hello World
 
 Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
