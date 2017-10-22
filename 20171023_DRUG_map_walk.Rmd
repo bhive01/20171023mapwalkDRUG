@@ -89,6 +89,15 @@ Data frames are special types of lists.
 Image credit: [R4DS](http://r4ds.had.co.nz/lists.html)
 ]
 
+---
+class: center, middle
+
+# NULL
+
+
+--
+`NULL` is the absence of a vector
+
 
 ---
 

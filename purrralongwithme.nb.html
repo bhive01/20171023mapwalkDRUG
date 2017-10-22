@@ -172,20 +172,85 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
+<p>Let’s load tidyverse</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5cbmBgYCJ9 -->
+<pre class="r"><code>library(tidyverse)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiKyBnZ3Bsb3QyIDIuMi4xLjkwMDAgICAgICAgIERhdGU6IDIwMTctMTAtMjJcbisgdGliYmxlICAxLjMuNCAgICAgICAgICAgICAgICBSOiAzLjQuMVxuKyB0aWR5ciAgIDAuNy4xICAgICAgICAgICAgICAgT1M6IG1hY09TIFNpZXJyYSAxMC4xMi42XG4rIHJlYWRyICAgMS4xLjAgICAgICAgICAgICAgIEdVSTogUlN0dWRpbyAxLjEuMzMxXG4rIHB1cnJyICAgMC4yLjMuOTAwMCAgICAgIExvY2FsZTogZW5fVVMuVVRGLThcbisgZHBseXIgICAwLjcuNC45MDAwICAgICAgICAgIFRaOiBBbWVyaWNhL0xvc19BbmdlbGVzXG4rIHN0cmluZ3IgMS4yLjAgICAgICAgICAgIFxuKyBmb3JjYXRzIDAuMi4wICAgICAgICAgICBcbkNvbmZsaWN0cyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuKiBmaWx0ZXIoKSwgIGZyb20gZHBseXIsIG1hc2tzIHN0YXRzOjpmaWx0ZXIoKVxuKiBsYWcoKSwgICAgIGZyb20gZHBseXIsIG1hc2tzIHN0YXRzOjpsYWcoKVxuIn0= -->
+<pre><code>+ ggplot2 2.2.1.9000        Date: 2017-10-22
++ tibble  1.3.4                R: 3.4.1
++ tidyr   0.7.1               OS: macOS Sierra 10.12.6
++ readr   1.1.0              GUI: RStudio 1.1.331
++ purrr   0.2.3.9000      Locale: en_US.UTF-8
++ dplyr   0.7.4.9000          TZ: America/Los_Angeles
++ stringr 1.2.0           
++ forcats 0.2.0           
+Conflicts --------------------------------------------------------------------
+* filter(),  from dplyr, masks stats::filter()
+* lag(),     from dplyr, masks stats::lag()</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <p>Data types</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luaXRpYXRlIGJsYW5rIHZlY3RvcnMgb2YgYSBzcGVjaWZpYyB0eXBlXG4jdGhpcyBjYW4gYmUgdXNlZnVsIHdoZW4gY2FwdHVyaW5nIGRhdGEgZnJvbSBmb3IgbG9vcHNcbmEgPC0gdmVjdG9yKFwibG9naWNhbFwiLCA1KVxuYiA8LSB2ZWN0b3IoXCJpbnRlZ2VyXCIsIDUpXG5jIDwtIHZlY3RvcihcImRvdWJsZVwiLCA1KVxuZCA8LSB2ZWN0b3IoXCJjaGFyYWN0ZXJcIiwgNSlcbmUgPC0gbGlzdCgpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luaXRpYXRlIGJsYW5rIHZlY3RvcnMgb2YgYSBzcGVjaWZpYyB0eXBlXG4jdGhpcyBjYW4gYmUgdXNlZnVsIHdoZW4gY2FwdHVyaW5nIGRhdGEgZnJvbSBmb3IgbG9vcHNcbmEgPC0gdmVjdG9yKFwibG9naWNhbFwiLCA1KVxuYVxuYGBgIn0= -->
 <pre class="r"><code>#initiate blank vectors of a specific type
 #this can be useful when capturing data from for loops
 a &lt;- vector(&quot;logical&quot;, 5)
-b &lt;- vector(&quot;integer&quot;, 5)
-c &lt;- vector(&quot;double&quot;, 5)
-d &lt;- vector(&quot;character&quot;, 5)
-e &lt;- list()</code></pre>
+a</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIEZBTFNFIEZBTFNFIEZBTFNFIEZBTFNFIEZBTFNFXG4ifQ== -->
+<pre><code>[1] FALSE FALSE FALSE FALSE FALSE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYiA8LSB2ZWN0b3IoXCJpbnRlZ2VyXCIsIDQpXG5iXG5gYGAifQ== -->
+<pre class="r"><code>b &lt;- vector(&quot;integer&quot;, 4)
+b</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAgMCAwIDBcbiJ9 -->
+<pre><code>[1] 0 0 0 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYyA8LSB2ZWN0b3IoXCJkb3VibGVcIiwgMikgIyBjYW4gYWxzbyB1c2UgXCJudW1lcmljXCJcbmNcbmBgYCJ9 -->
+<pre class="r"><code>c &lt;- vector(&quot;double&quot;, 2) # can also use &quot;numeric&quot;
+c</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAgMFxuIn0= -->
+<pre><code>[1] 0 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZCA8LSB2ZWN0b3IoXCJjaGFyYWN0ZXJcIiwgMTApXG5kXG5gYGAifQ== -->
+<pre class="r"><code>d &lt;- vector(&quot;character&quot;, 10)
+d</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIlwiIFwiXCIgXCJcIiBcIlwiIFwiXCIgXCJcIiBcIlwiIFwiXCIgXCJcIiBcIlwiXG4ifQ== -->
+<pre><code> [1] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZSA8LSB2ZWN0b3IoXCJjb21wbGV4XCIsIDcpXG5lXG5gYGAifQ== -->
+<pre class="r"><code>e &lt;- vector(&quot;complex&quot;, 7)
+e</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDArMGkgMCswaSAwKzBpIDArMGkgMCswaSAwKzBpIDArMGlcbiJ9 -->
+<pre><code>[1] 0+0i 0+0i 0+0i 0+0i 0+0i 0+0i 0+0i</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZiA8LSB2ZWN0b3IoXCJyYXdcIiwgMylcbmZcbmBgYCJ9 -->
+<pre class="r"><code>f &lt;- vector(&quot;raw&quot;, 3)
+f</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAwIDAwIDAwXG4ifQ== -->
+<pre><code>[1] 00 00 00</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZyA8LSBsaXN0KClcbmdcbmBgYCJ9 -->
+<pre class="r"><code>g &lt;- list()
+g</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibGlzdCgpXG4ifQ== -->
+<pre><code>list()</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>NAs</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3doYXQgZG8gdGhlIE5BcyBsb29rIGxpa2U/XG5saXN0KE5BLCBOQV9pbnRlZ2VyXywgTkFfcmVhbF8sIE5BX2NoYXJhY3Rlcl8sIE5BX2NvbXBsZXhfKVxuYGBgIn0= -->
@@ -213,30 +278,50 @@ list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>The NULL element</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsZXQncyBwdXQgYWN0dWFsIHZhbHVlcyBpbnRvIHRoZXNlXG5hIDwtIGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBGQUxTRSwgTkEpICNzZWVtcyBsb2dpY2FsIFxuYiA8LSBjKDE6NSwgTkFfaW50ZWdlcl8pICNJbnRlZ2Vyc1xuYyA8LSBjKHJub3JtKDUpLCBOQV9yZWFsXykgI3B1bGwgZG91YmxlcyBmcm9tIG5vcm1hbCBkaXN0cmlidXRpb25cbmQgPC0gYyhMRVRURVJTWzE6NV0sIE5BX2NoYXJhY3Rlcl8pICNmaXJzdCA1IGNhcGl0YWwgbGV0dGVyc1xuZSA8LSBsaXN0KGEsIGIsIGMsIGQpICNtYWtlIGEgbGlzdFxuZSAjIGNoZWNrIGl0IHR3aXhcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBOVUxMIGlzIHRoZSBhYnNlbmNlIG9mIGEgdmVjdG9yXG5hIDwtIE5VTExcblxubXRjYXJzXG5tdGNhcnNbMV0gPC0gTlVMTCAjdGhpcyBnZXRzIHJpZCBvZiB0aGUgbXBnIGNvbG91bW4gY29tcGxldGVseVxubXRjYXJzXG5cbmRhdGEobXRjYXJzKSAjIHJlc3RvcmUgbXRjYXJzXG5cbmBgYCJ9 -->
+<pre class="r"><code># NULL is the absence of a vector
+a &lt;- NULL
+
+mtcars
+mtcars[1] &lt;- NULL #this gets rid of the mpg coloumn completely
+mtcars
+
+data(mtcars) # restore mtcars
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Vectors can be assembled by list()</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsZXQncyBwdXQgYWN0dWFsIHZhbHVlcyBpbnRvIHRoZXNlXG5hIDwtIGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBGQUxTRSwgTkEpICNzZWVtcyBsb2dpY2FsIFxuYiA8LSBjKDE6NywgTkFfaW50ZWdlcl8pICNJbnRlZ2Vyc1xuYyA8LSBjKHJub3JtKDgpLCBOQV9yZWFsXykgI3B1bGwgZG91YmxlcyBmcm9tIG5vcm1hbCBkaXN0cmlidXRpb25cbmQgPC0gYyhMRVRURVJTWzE6M10sIE5BX2NoYXJhY3Rlcl8pICNmaXJzdCA1IGNhcGl0YWwgbGV0dGVyc1xuXG5lIDwtIGxpc3QoYSwgYiwgYywgZCkgI21ha2UgYSBsaXN0XG5cbmUgIyBjaGVjayBpdCB0d2l4XG5cbiNMaXN0cyBjYW4gY29udGFpbiBhbnl0aGluZyBvZiBhbnkgbGVuZ3RoXG4jZGF0YS5mcmFtZSBpcyBhIHNwZWNpYWwgdHlwZSBvZiBsaXN0XG5cbmRhdGEuZnJhbWUoYSwgYikgIyB1aCBvaFxuI2VxdWFsIGxlbmd0aHMgYXJlIHJlcXVpcmVkIHdoZW4gbWFraW5nIGEgZGZcblxuYSA8LSBjKFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgRkFMU0UsIE5BLCBOQSwgTkEpICMgbWFrZSBpdCA4IGxpa2UgYlxuZGYgPC0gZGF0YS5mcmFtZShhID0gYSwgYiA9IGIpICMgT0ggWUVBSCAvS29vbGFpZG1hbi5naWZcbmRmIFxuI3RpYmJsZXMgYXJlIGEgc3RyaWN0IHR5cGUgb2YgZGF0YS5mcmFtZVxuYXNfdGliYmxlKGRmKVxuIyB3aXRoIHNsaWdodGx5IG1vcmUgaW5mb3JtYXRpdmUgcHJpbnRpbmdcblxuXG5gYGAifQ== -->
 <pre class="r"><code># let's put actual values into these
 a &lt;- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) #seems logical 
-b &lt;- c(1:5, NA_integer_) #Integers
-c &lt;- c(rnorm(5), NA_real_) #pull doubles from normal distribution
-d &lt;- c(LETTERS[1:5], NA_character_) #first 5 capital letters
+b &lt;- c(1:7, NA_integer_) #Integers
+c &lt;- c(rnorm(8), NA_real_) #pull doubles from normal distribution
+d &lt;- c(LETTERS[1:3], NA_character_) #first 5 capital letters
+
 e &lt;- list(a, b, c, d) #make a list
-e # check it twix</code></pre>
+
+e # check it twix
+
+#Lists can contain anything of any length
+#data.frame is a special type of list
+
+data.frame(a, b) # uh oh
+#equal lengths are required when making a df
+
+a &lt;- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA, NA, NA) # make it 8 like b
+df &lt;- data.frame(a = a, b = b) # OH YEAH /Koolaidman.gif
+df 
+#tibbles are a strict type of data.frame
+as_tibble(df)
+# with slightly more informative printing
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAgVFJVRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSAgICBOQVxuXG5bWzJdXVxuWzFdICAxICAyICAzICA0ICA1IE5BXG5cbltbM11dXG5bMV0gIDAuNDc2NzU3MSAtMC41Nzg5ODM1IC0xLjYyOTcxODMgIDEuODk1MDI3NSAtMC4yNDA0NDczICAgICAgICAgTkFcblxuW1s0XV1cblsxXSBcIkFcIiBcIkJcIiBcIkNcIiBcIkRcIiBcIkVcIiBOQSBcbiJ9 -->
-<pre><code>[[1]]
-[1]  TRUE FALSE  TRUE FALSE FALSE    NA
-
-[[2]]
-[1]  1  2  3  4  5 NA
-
-[[3]]
-[1]  0.4767571 -0.5789835 -1.6297183  1.8950275 -0.2404473         NA
-
-[[4]]
-[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; NA </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
@@ -253,7 +338,7 @@ e # check it twix</code></pre>
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGF0YSB0eXBlcwpgYGB7ciB2ZWN0b3IgaW50aWF0aW9ufQojaW5pdGlhdGUgYmxhbmsgdmVjdG9ycyBvZiBhIHNwZWNpZmljIHR5cGUKI3RoaXMgY2FuIGJlIHVzZWZ1bCB3aGVuIGNhcHR1cmluZyBkYXRhIGZyb20gZm9yIGxvb3BzCmEgPC0gdmVjdG9yKCJsb2dpY2FsIiwgNSkKYiA8LSB2ZWN0b3IoImludGVnZXIiLCA1KQpjIDwtIHZlY3RvcigiZG91YmxlIiwgNSkKZCA8LSB2ZWN0b3IoImNoYXJhY3RlciIsIDUpCmUgPC0gbGlzdCgpCmBgYAoKYGBge3IgTkEgTkEgTkEgTkEgTkEgTkEgTkEgTkEgQmF0bWFufQojd2hhdCBkbyB0aGUgTkFzIGxvb2sgbGlrZT8KbGlzdChOQSwgTkFfaW50ZWdlcl8sIE5BX3JlYWxfLCBOQV9jaGFyYWN0ZXJfLCBOQV9jb21wbGV4XykKI25vdCB2ZXJ5IGV4Y2l0aW5nCmBgYAoKYGBge3IgVmVjdG9ycyBWaWN0b3J9CiMgbGV0J3MgcHV0IGFjdHVhbCB2YWx1ZXMgaW50byB0aGVzZQphIDwtIGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBGQUxTRSwgTkEpICNzZWVtcyBsb2dpY2FsIApiIDwtIGMoMTo1LCBOQV9pbnRlZ2VyXykgI0ludGVnZXJzCmMgPC0gYyhybm9ybSg1KSwgTkFfcmVhbF8pICNwdWxsIGRvdWJsZXMgZnJvbSBub3JtYWwgZGlzdHJpYnV0aW9uCmQgPC0gYyhMRVRURVJTWzE6NV0sIE5BX2NoYXJhY3Rlcl8pICNmaXJzdCA1IGNhcGl0YWwgbGV0dGVycwoKZSA8LSBsaXN0KGEsIGIsIGMsIGQpICNtYWtlIGEgbGlzdAoKZSAjIGNoZWNrIGl0IHR3aXgKYGBgCgoKCgpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiAKClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLiAKCmBgYHtyfQpwbG90KGNhcnMpCmBgYAoKQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkNtZCtPcHRpb24rSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkNtZCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLiAKClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKTGV0J3MgbG9hZCB0aWR5dmVyc2UKYGBgIHtyIHNldHVwfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKYGBgCgoKRGF0YSB0eXBlcwpgYGB7ciB2ZWN0b3IgaW50aWF0aW9ufQojaW5pdGlhdGUgYmxhbmsgdmVjdG9ycyBvZiBhIHNwZWNpZmljIHR5cGUKI3RoaXMgY2FuIGJlIHVzZWZ1bCB3aGVuIGNhcHR1cmluZyBkYXRhIGZyb20gZm9yIGxvb3BzCmEgPC0gdmVjdG9yKCJsb2dpY2FsIiwgNSkKYQpiIDwtIHZlY3RvcigiaW50ZWdlciIsIDQpCmIKYyA8LSB2ZWN0b3IoImRvdWJsZSIsIDIpICMgY2FuIGFsc28gdXNlICJudW1lcmljIgpjCmQgPC0gdmVjdG9yKCJjaGFyYWN0ZXIiLCAxMCkKZAplIDwtIHZlY3RvcigiY29tcGxleCIsIDcpCmUKZiA8LSB2ZWN0b3IoInJhdyIsIDMpCmYKZyA8LSBsaXN0KCkKZwpgYGAKTkFzCmBgYHtyIE5BIE5BIE5BIE5BIE5BIE5BIE5BIE5BIEJhdG1hbn0KI3doYXQgZG8gdGhlIE5BcyBsb29rIGxpa2U/Cmxpc3QoTkEsIE5BX2ludGVnZXJfLCBOQV9yZWFsXywgTkFfY2hhcmFjdGVyXywgTkFfY29tcGxleF8pCiNub3QgdmVyeSBleGNpdGluZwpgYGAKClRoZSBOVUxMIGVsZW1lbnQKYGBgIHtyIE5VTExzfQojIE5VTEwgaXMgdGhlIGFic2VuY2Ugb2YgYSB2ZWN0b3IKYSA8LSBOVUxMCgptdGNhcnMKbXRjYXJzWzFdIDwtIE5VTEwgI3RoaXMgZ2V0cyByaWQgb2YgdGhlIG1wZyBjb2xvdW1uIGNvbXBsZXRlbHkKbXRjYXJzCgpkYXRhKG10Y2FycykgIyByZXN0b3JlIG10Y2FycwoKYGBgCgpWZWN0b3JzIGNhbiBiZSBhc3NlbWJsZWQgYnkgbGlzdCgpCmBgYHtyIFZlY3RvcnMgVmljdG9yLCBlcnJvciA9IFRSVUV9CiMgbGV0J3MgcHV0IGFjdHVhbCB2YWx1ZXMgaW50byB0aGVzZQphIDwtIGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBGQUxTRSwgTkEpICNzZWVtcyBsb2dpY2FsIApiIDwtIGMoMTo3LCBOQV9pbnRlZ2VyXykgI0ludGVnZXJzCmMgPC0gYyhybm9ybSg4KSwgTkFfcmVhbF8pICNwdWxsIGRvdWJsZXMgZnJvbSBub3JtYWwgZGlzdHJpYnV0aW9uCmQgPC0gYyhMRVRURVJTWzE6M10sIE5BX2NoYXJhY3Rlcl8pICNmaXJzdCA1IGNhcGl0YWwgbGV0dGVycwoKZSA8LSBsaXN0KGEsIGIsIGMsIGQpICNtYWtlIGEgbGlzdAoKZSAjIGNoZWNrIGl0IHR3aXgKCiNMaXN0cyBjYW4gY29udGFpbiBhbnl0aGluZyBvZiBhbnkgbGVuZ3RoCiNkYXRhLmZyYW1lIGlzIGEgc3BlY2lhbCB0eXBlIG9mIGxpc3QKCmRhdGEuZnJhbWUoYSwgYikgIyB1aCBvaAojZXF1YWwgbGVuZ3RocyBhcmUgcmVxdWlyZWQgd2hlbiBtYWtpbmcgYSBkZgoKYSA8LSBjKFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgRkFMU0UsIE5BLCBOQSwgTkEpICMgbWFrZSBpdCA4IGxpa2UgYgpkZiA8LSBkYXRhLmZyYW1lKGEgPSBhLCBiID0gYikgIyBPSCBZRUFIIC9Lb29sYWlkbWFuLmdpZgpkZiAKI3RpYmJsZXMgYXJlIGEgc3RyaWN0IHR5cGUgb2YgZGF0YS5mcmFtZQphc190aWJibGUoZGYpCiMgd2l0aCBzbGlnaHRseSBtb3JlIGluZm9ybWF0aXZlIHByaW50aW5nCgoKYGBgCgoKCgpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiAKClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLiAKCmBgYHtyfQpwbG90KGNhcnMpCmBgYAoKQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkNtZCtPcHRpb24rSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkNtZCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLiAKClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCg==</div>
 
 
 
