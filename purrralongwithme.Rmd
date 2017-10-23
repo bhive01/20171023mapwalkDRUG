@@ -1,15 +1,16 @@
 ---
-title: "R Notebook"
+title: "D-RUG 2017-10-26 Map/Walk Functions in purrr"
+author: "Brandon Hurr"
 output: html_notebook
 ---
 
-Let's load tidyverse
+# Let's load tidyverse
 ``` {r setup}
 library(tidyverse)
 ```
 
 
-Data types
+# R Data types
 ```{r vector intiation}
 #initiate blank vectors of a specific type
 #this can be useful when capturing data from for loops
@@ -28,14 +29,15 @@ f
 g <- list()
 g
 ```
-NAs
+# NAs
 ```{r NA NA NA NA NA NA NA NA Batman}
 #what do the NAs look like?
 list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_)
 #not very exciting
 ```
 
-The NULL element
+# The NULL element
+
 ``` {r NULLs}
 # NULL is the absence of a vector
 a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) # logical vector 
@@ -51,7 +53,7 @@ data(mtcars) # restore mtcars
 
 ```
 
-Vectors can be assembled by list()
+# Assembling vectors into a list, dataframes and tibbles
 ```{r Vectors Victor, error = TRUE}
 # let's put actual values into these
 a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) #seems logical 
@@ -64,10 +66,9 @@ e <- list(a, b, c, d) #make a list
 e # check it twix
 
 #Lists can contain anything of any length
-#data.frame is a special type of list
+#data.frame is a special type of list; things need to line up
 
 data.frame(a, b) # uh oh
-#equal lengths are required when making a df
 
 a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA, NA, NA) # make it 8 like b
 df <- data.frame(a = a, b = b) # OH YEAH /Koolaidman.gif
@@ -78,34 +79,46 @@ as_tibble(df)
 ```
 
 
-Getting at variables inside lists/dataframes/tibbles
-``` {r list_df_tibble_subsetting} 
-e <- list(a = a, b= b, c = c, d = d) #make a named list
+# Accessing elements inside vectors, lists, dataframes, and tibbles
+``` {r list_df_tibble_subsetting, error = TRUE} 
+e <- list(a = a, b= b, c = c, d = d, e = list(1, "A")) #make a named list
+
+#vectors
+a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) #logic vector 
+a[1] 
+a[[1]] # does the same thing
+a[[[1]]] #lolwut are you doing?
+
+
 # single brackets returns a list with that element in it
-# can reference by location
+# can reference by location or by name
 e[1]
-# or name
 e["a"]
 
-# double brackets returns a vector
+# double brackets return a vector 
 e[[2]]
 e[["b"]]
 
-#dolla dolla bills y'all (same thing)
+#stack [['s it to peel the onion back
+e[["e"]][[2]]
+
+#dolla dolla bills y'all (works liks [[, with named vectors)
 e$c
 
-#same for dataframes and tibbles
+#same for dataframes
 mtcars[1]
 mtcars[[1]]
 
+# and for tibbles
+tbbl <- tibble(x = 1:3, y = LETTERS[1:3])
+tbbl[1]
+tbbl["x"]
 
-
-
-
+tbbl[[2]]
+tbbl[["y"]]
 ```
 
-
-
+# The very basic basics of functions
 
 ``` {r functionbasics}
 #basic struction is assignment, definition, arguments, body, output
@@ -113,6 +126,11 @@ addxy <- function(x, y) {
   out <- x+y
   out
 }
+
+formals(addxy)
+body(addxy)
+environment(addxy)
+
 addxy(1,2)
 
 # anonymous functions are not assigned, but are used in place
@@ -121,11 +139,100 @@ function(x) {x+1}
 
 ```
 
+``` {r Y_make_a_function}
+#Simple dataframe
+df <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+# What are we doing here?
+df$a <- (df$a - min(df$a, na.rm = TRUE)) /  
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$b <- (df$b - min(df$b, na.rm = TRUE)) /  
+  (max(df$b, na.rm = TRUE) - min(df$b, na.rm = TRUE))
+df$c <- (df$c - min(df$a, na.rm = TRUE)) /  
+  (max(df$c, na.rm = TRUE) - min(df$c, na.rm = TRUE))
+df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+
+```
 
 
+``` {r function01, error = TRUE, eval = FALSE}
+df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
 
 
+``` {r function02, error = TRUE, eval = FALSE}
+# pull out what's common
+x <- (x - min(x, na.rm = TRUE)) /  
+  (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+```
 
+
+``` {r function03, error = TRUE, eval = FALSE}
+
+#simplify more and refactor if that makes sense
+x <- (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+```
+
+--
+``` {r function04, error = TRUE, eval = FALSE}
+# rewrite as a function
+rescale_0_1 <- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+```
+
+``` {r test function}
+rescale_0_1 <- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+
+testvec <- 1:11
+testvec
+rescale_0_1(testvec)
+```
+
+``` {r use_function}
+df <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+rescale_0_1 <- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+
+rescale_0_1(df$a)
+rescale_0_1(df$b)
+rescale_0_1(df$c)
+rescale_0_1(df$d)
+```
+
+
+``` {r forloops}
+for (i in 1:ncol(df)) {
+  print(rescale_0_1(df[[i]]))
+}
+```
+We're printing here because the for loop hides the output
+
+# seq_along
+
+``` {r for_seq_along_loops}
+for (i in seq_along(df)) {
+  print(rescale_0_1(df[[i]]))
+}
+```
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 

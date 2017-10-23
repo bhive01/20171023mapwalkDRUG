@@ -108,9 +108,31 @@ class: center, middle
 class: inverse, center, middle
 
 # Notebook Time
+Vectors and data types
 
 ---
 
+# Subsetting Lists/Dataframes/Tibbles
+
+Three main ways to subset a List/df/tibble
+- `[` returns a list/df/tibble with those elements
+- `[[` returns an element from list/df/tibble
+- `$` same as `[[`
+
+There are many caveats and ways to do things:
+http://adv-r.had.co.nz/Subsetting.html
+
+Tibbles are strict about what they return. df's are less so: 
+https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html
+
+---
+
+class: inverse, center, middle
+
+# Notebook Time
+Subsetting data
+
+---
 # Functions in R
 
 
@@ -121,27 +143,325 @@ function01 &lt;- function(argument1, argument2, ...) {
 }
 ```
 
-- Assignment
-
-`function1 &lt;-`
-
-- Definition
-
-`function() {}`
-
-- Arguments
-
+- Assignment `function1 &lt;-`
+- Function function `function() {}`
+- formals or arguments
 - Body
-
+  - Code that solves your problem
 - Output
   - last object is returned
   - can return something earlier with `return()`
+
+Key realization: Functions are just like other R objects. You can use them in other functions.
+
+http://adv-r.had.co.nz/Functions.html#function-components
+
+
+---
+# Why write a function?
+
+```r
+#Simple dataframe
+df &lt;- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+# What are we doing here?
+df$a &lt;- (df$a - min(df$a, na.rm = TRUE)) /  
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$b &lt;- (df$b - min(df$b, na.rm = TRUE)) /  
+  (max(df$b, na.rm = TRUE) - min(df$b, na.rm = TRUE))
+df$c &lt;- (df$c - min(df$a, na.rm = TRUE)) /  
+  (max(df$c, na.rm = TRUE) - min(df$c, na.rm = TRUE))
+df$d &lt;- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
+No shame in doing this because it works, but it's error prone and lengthy. 
+
+---
+
+# How many repeats is too many?
+
+Hadley's reasoning is that if you've got 3 copies of the same code then it's time to write a function. (I think that is reasonable.)
+
+
+
+--
+Also consider if you might reuse this again in another place. That counts as a repeat too!
+
+---
+# Simplify and functionalize
+
+
+```r
+df$d &lt;- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
+
+--
+
+```r
+# pull out what's common
+x &lt;- (x - min(x, na.rm = TRUE)) /  
+  (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+```
+
+--
+
+```r
+#simplify more and refactor if that makes sense
+x &lt;- (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+```
+
+--
+
+```r
+# rewrite as a function
+rescale_0_1 &lt;- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+```
+
+---
+
+# Test it
+
+Use simple data that you know what the output should be.
+
+
+```r
+rescale_0_1 &lt;- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+
+testvec &lt;- 1:11
+testvec
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10 11
+```
+
+```r
+rescale_0_1(testvec)
+```
+
+```
+##  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+```
+Does the result make sense? 
+
+---
+
+# Put it to work for you
+
+
+```r
+df &lt;- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+rescale_0_1 &lt;- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+
+rescale_0_1(df$a)
+```
+
+```
+##  [1] 0.08817912 0.21894147 0.44356784 0.10751204 0.37761707 0.00000000
+##  [7] 0.14381626 0.65048054 0.45371122 1.00000000
+```
+
+```r
+rescale_0_1(df$b)
+```
+
+```
+##  [1] 0.7760343 1.0000000 0.0000000 0.4341561 0.3922758 0.3739743 0.7940351
+##  [8] 0.9399762 0.6655922 0.3888789
+```
+
+```r
+rescale_0_1(df$c)
+```
+
+```
+##  [1] 0.93866840 0.89170007 0.00000000 1.00000000 0.28185104 0.46897141
+##  [7] 0.09125837 0.33360180 0.19449045 0.54034009
+```
+
+```r
+rescale_0_1(df$d)
+```
+
+```
+##  [1] 0.82340828 0.46138219 0.86178155 0.29018074 0.13874828 0.01374187
+##  [7] 0.84503995 1.00000000 0.99582688 0.00000000
+```
+
+---
+
+# What if we could take those repeats away too? 
+
+```r
+rescale_0_1(df$a)
+rescale_0_1(df$b)
+rescale_0_1(df$c)
+rescale_0_1(df$d)
+```
+The function simplified the call, but we're copying and pasting again. 
+
+🤔
+
+---
+
+# Iterate over a list
+
+For Loop
+
+
+```r
+for (i in 1:ncol(df)) {
+  print(rescale_0_1(df[[i]]))
+}
+```
+
+```
+##  [1] 0.08817912 0.21894147 0.44356784 0.10751204 0.37761707 0.00000000
+##  [7] 0.14381626 0.65048054 0.45371122 1.00000000
+##  [1] 0.7760343 1.0000000 0.0000000 0.4341561 0.3922758 0.3739743 0.7940351
+##  [8] 0.9399762 0.6655922 0.3888789
+##  [1] 0.93866840 0.89170007 0.00000000 1.00000000 0.28185104 0.46897141
+##  [7] 0.09125837 0.33360180 0.19449045 0.54034009
+##  [1] 0.82340828 0.46138219 0.86178155 0.29018074 0.13874828 0.01374187
+##  [7] 0.84503995 1.00000000 0.99582688 0.00000000
+```
+We're printing here because the for loop hides the output
+
+---
+# seq_along
+`seq_along()` generates the 1:end for you and handles 0 length 
+
+
+```r
+for (i in seq_along(df)) {
+  print(rescale_0_1(df[[i]]))
+}
+```
+
+```
+##  [1] 0.08817912 0.21894147 0.44356784 0.10751204 0.37761707 0.00000000
+##  [7] 0.14381626 0.65048054 0.45371122 1.00000000
+##  [1] 0.7760343 1.0000000 0.0000000 0.4341561 0.3922758 0.3739743 0.7940351
+##  [8] 0.9399762 0.6655922 0.3888789
+##  [1] 0.93866840 0.89170007 0.00000000 1.00000000 0.28185104 0.46897141
+##  [7] 0.09125837 0.33360180 0.19449045 0.54034009
+##  [1] 0.82340828 0.46138219 0.86178155 0.29018074 0.13874828 0.01374187
+##  [7] 0.84503995 1.00000000 0.99582688 0.00000000
+```
+
+
+---
+
+# Can we do better?
+
+Iterate over df with `purrr::map`
+
+
+```r
+map(df, rescale_0_1)
+```
+
+```
+## $a
+##  [1] 0.08817912 0.21894147 0.44356784 0.10751204 0.37761707 0.00000000
+##  [7] 0.14381626 0.65048054 0.45371122 1.00000000
+## 
+## $b
+##  [1] 0.7760343 1.0000000 0.0000000 0.4341561 0.3922758 0.3739743 0.7940351
+##  [8] 0.9399762 0.6655922 0.3888789
+## 
+## $c
+##  [1] 0.93866840 0.89170007 0.00000000 1.00000000 0.28185104 0.46897141
+##  [7] 0.09125837 0.33360180 0.19449045 0.54034009
+## 
+## $d
+##  [1] 0.82340828 0.46138219 0.86178155 0.29018074 0.13874828 0.01374187
+##  [7] 0.84503995 1.00000000 0.99582688 0.00000000
+```
+
+---
+
+class: inverse, center, middle
+
+![](figures/tim-and-eric-mind-blown.gif)
+
+---
+# purrr::map
+
+`map` iterates over any list and always returns a list
+
+```r
+l = list(a=1:10, b = 10:100)
+map(l, function(x) mean(x, na.rm = TRUE))
+```
+
+```
+## $a
+## [1] 5.5
+## 
+## $b
+## [1] 55
+```
+
+---
+
+# more maps
+
+Other types of `map` that return specific things
+  - `map_lgl` logical 
+  - `map_int` integer 
+  - `map_dbl` double 
+  - `map_chr` character 
+  - `map_df` dataframe
+
+```r
+l = list(a=1:10, b = 10:100)
+map_dbl(l, function(x) mean(x, na.rm = TRUE))
+```
+
+```
+##    a    b 
+##  5.5 55.0
+```
+
+
+```r
+l = list(a=1:10, b = 10:100)
+map_lgl(l, function(x) mean(x, na.rm = TRUE))
+```
+
+```
+## Error: Can't coerce element 1 from a double to a logical
+```
+
+These will fail if the return type is incorrect.
+
 
 
 
 
 ---
-# Hello World
+
 
 Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
 
@@ -400,8 +720,6 @@ knitr::kable(head(iris), format = 'html')
 &lt;/tbody&gt;
 &lt;/table&gt;
 
----
-background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
 ---
 
 # HTML Widgets

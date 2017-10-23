@@ -6,7 +6,6 @@ author: "Brandon Hurr"
 date: "2017/10/26"
 output:
   xaringan::moon_reader:
-    yolo: true
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -16,6 +15,7 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+library(tidyverse)
 ```
 
 # Outline
@@ -104,22 +104,29 @@ class: center, middle
 class: inverse, center, middle
 
 # Notebook Time
+Vectors and data types
 
 ---
 
-Subsetting Lists/Dataframes/Tibbles
+# Subsetting Lists/Dataframes/Tibbles
 
-This is a very complex area
-`[`
-`[[`
-`$`
+Three main ways to subset a List/df/tibble
+- `[` returns a list/df/tibble with those elements
+- `[[` returns an element from list/df/tibble
+- `$` same as `[[`
 
-
-
+There are many caveats and ways to do things:
 http://adv-r.had.co.nz/Subsetting.html
 
+Tibbles are strict about what they return. df's are less so: 
+https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html
 
+---
 
+class: inverse, center, middle
+
+# Notebook Time
+Subsetting data
 
 ---
 # Functions in R
@@ -131,27 +138,216 @@ function01 <- function(argument1, argument2, ...) {
 }
 ```
 
-- Assignment
-
-`function1 <-`
-
-- Definition
-
-`function() {}`
-
-- Arguments
-
+- Assignment `function1 <-`
+- Function function `function() {}`
+- formals or arguments
 - Body
-
+  - Code that solves your problem
 - Output
   - last object is returned
   - can return something earlier with `return()`
 
-Functions are just like other objects. You can reference them with `<-` and use them in other functions.
+Key realization: Functions are just like other R objects. You can use them in other functions.
+
+http://adv-r.had.co.nz/Functions.html#function-components
 
 
 ---
-# Hello World
+# Why write a function?
+``` {r Y_U_NO_function}
+#Simple dataframe
+df <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+# What are we doing here?
+df$a <- (df$a - min(df$a, na.rm = TRUE)) /  
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$b <- (df$b - min(df$b, na.rm = TRUE)) /  
+  (max(df$b, na.rm = TRUE) - min(df$b, na.rm = TRUE))
+df$c <- (df$c - min(df$a, na.rm = TRUE)) /  
+  (max(df$c, na.rm = TRUE) - min(df$c, na.rm = TRUE))
+df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
+No shame in doing this because it works, but it's error prone and lengthy. 
+
+---
+
+# How many repeats is too many?
+
+Hadley's reasoning is that if you've got 3 copies of the same code then it's time to write a function. (I think that is reasonable.)
+
+
+
+--
+Also consider if you might reuse this again in another place. That counts as a repeat too!
+
+---
+# Simplify and functionalize
+
+``` {r function01, error = TRUE, eval = FALSE}
+df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
+
+--
+``` {r function02, error = TRUE, eval = FALSE}
+# pull out what's common
+x <- (x - min(x, na.rm = TRUE)) /  
+  (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+```
+
+--
+``` {r function03, error = TRUE, eval = FALSE}
+
+#simplify more and refactor if that makes sense
+x <- (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+```
+
+--
+``` {r function04, error = TRUE, eval = FALSE}
+# rewrite as a function
+rescale_0_1 <- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+```
+
+---
+
+# Test it
+
+Use simple data that you know what the output should be.
+
+``` {r test function}
+rescale_0_1 <- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+
+testvec <- 1:11
+testvec
+rescale_0_1(testvec)
+```
+Does the result make sense? 
+
+---
+
+# Put it to work for you
+
+``` {r use_function}
+
+df <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+rescale_0_1 <- function(x) {
+  (x - min(x, na.rm = TRUE)) /  
+  diff(range(x, na.rm = TRUE))
+}
+
+rescale_0_1(df$a)
+rescale_0_1(df$b)
+rescale_0_1(df$c)
+rescale_0_1(df$d)
+```
+
+---
+
+# What if we could take those repeats away too? 
+``` {r still repeating, eval = FALSE}
+rescale_0_1(df$a)
+rescale_0_1(df$b)
+rescale_0_1(df$c)
+rescale_0_1(df$d)
+```
+The function simplified the call, but we're copying and pasting again. 
+
+🤔
+
+---
+
+# Iterate over a list
+
+For Loop
+
+``` {r forloops}
+for (i in 1:ncol(df)) {
+  print(rescale_0_1(df[[i]]))
+}
+```
+We're printing here because the for loop hides the output
+
+---
+# seq_along
+`seq_along()` generates the 1:end for you and handles 0 length 
+
+``` {r for_seq_along_loops}
+for (i in seq_along(df)) {
+  print(rescale_0_1(df[[i]]))
+}
+```
+
+
+---
+
+# Can we do better?
+
+Iterate over df with `purrr::map`
+
+``` {r map_over}
+map(df, rescale_0_1)
+```
+
+---
+
+class: inverse, center, middle
+
+![](figures/tim-and-eric-mind-blown.gif)
+
+---
+# purrr::map
+
+`map` iterates over any list and always returns a list
+``` {r simplemap}
+l = list(a=1:10, b = 10:100)
+map(l, function(x) mean(x, na.rm = TRUE))
+```
+
+---
+
+# more maps
+
+Other types of `map` that return specific things
+  - `map_lgl` logical 
+  - `map_int` integer 
+  - `map_dbl` double 
+  - `map_chr` character 
+  - `map_df` dataframe
+``` {r rightmap}
+l = list(a=1:10, b = 10:100)
+map_dbl(l, function(x) mean(x, na.rm = TRUE))
+```
+
+``` {r wrongmap, error = TRUE}
+l = list(a=1:10, b = 10:100)
+map_lgl(l, function(x) mean(x, na.rm = TRUE))
+```
+
+These will fail if the return type is incorrect.
+
+---
+
+
+
+
+---
 
 Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
 
