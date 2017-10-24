@@ -212,39 +212,56 @@ rescale_0_1 <- function(x) {
   diff(range(x, na.rm = TRUE))
 }
 
-rescale_0_1(df$a)
-rescale_0_1(df$b)
-rescale_0_1(df$c)
-rescale_0_1(df$d)
+out <- df
+out$a <- rescale_0_1(df$a)
+out$b <- rescale_0_1(df$b)
+out$c <- rescale_0_1(df$c)
+out$d <- rescale_0_1(df$d)
+out
 ```
 
-
+# Reduce iteration with a for loop
 ``` {r forloops}
-for (i in 1:ncol(df)) {
-  print(rescale_0_1(df[[i]]))
+out <- df #make a copy to store scaled data
+for (i in 1:ncol(df)) { # loop through each element
+  out[i] <- rescale_0_1(df[[i]]) #apply function and store it to out
 }
+out
 ```
-We're printing here because the for loop hides the output
 
 # seq_along
 
 ``` {r for_seq_along_loops}
+out <- df #make a copy to store scaled data
 for (i in seq_along(df)) {
-  print(rescale_0_1(df[[i]]))
+  out[i] <- rescale_0_1(df[[i]])
 }
+out
 ```
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
-
-```{r}
-plot(cars)
+# map to iterate
+```{r WHAT_IS_THIS_MAPGIC}
+map(df, function(x) rescale_0_1(x)) %>% #map over the columns in df
+```
+# let's look at another more simple example
+# This list contains two integer vectors and we want the mean of each one
+``` {r simplemap}
+l = list(a=1:10, b = 10:100)
+map(l, function(x) mean(x, na.rm = TRUE))
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+# We know we want one double back from each list
+# specify and you get a vector back instead of a list
+``` {r rightmap}
+l = list(a=1:10, b = 10:100)
+map_dbl(l, function(x) mean(x, na.rm = TRUE))
+```
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+# These are type-strict functions though
+# get it wrong and you'll know
+``` {r wrongmap, error = TRUE}
+l = list(a=1:10, b = 10:100)
+map_lgl(l, function(x) mean(x, na.rm = TRUE))
+```
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
