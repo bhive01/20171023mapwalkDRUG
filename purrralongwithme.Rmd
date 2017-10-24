@@ -264,4 +264,5 @@ l = list(a=1:10, b = 10:100)
 map_lgl(l, function(x) mean(x, na.rm = TRUE))
 ```
 
+# Map Examples
 

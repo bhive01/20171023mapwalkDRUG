@@ -342,7 +342,7 @@ l = list(a=1:10, b = 10:100)
 map(l, function(x) mean(x, na.rm = TRUE))
 ```
 Arguments/formals
-  - `.x` list to iterate over
+  - `.x` list (or vector) to iterate over
   - `.f` function to apply over that list
   - `...` things that get passed from map() to .f
 
@@ -401,7 +401,26 @@ map_dbl(l, ~mean(.x, na.rm = TRUE))
 All return the same thing. 
 
 ---
-This slide left intentionally blank. 
+# Map use case #1: Read in files
+
+http://data.library.virginia.edu/getting-started-with-the-purrr-package-in-r/
+
+``` {r read_csv_s}
+#this will work if you clone the github repository
+fileloc <- file.path(getwd(), "stocks")
+#create a list of files to read in that end in csv
+files <- list.files(fileloc, pattern = "csv$", full.names = TRUE) 
+#make pretty names based upon the file names
+filenames <-  list.files(fileloc, pattern = "csv$")
+names(dat2) <- gsub("\\.csv", "", files)
+#this reads in each csv independently into a list
+dat2 <- map(files, read.csv)
+
+dat2
+
+```
+
+---
 
 
 ---
