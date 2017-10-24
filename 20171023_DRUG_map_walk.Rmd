@@ -13,6 +13,14 @@ output:
       countIncrementalSlides: false
 ---
 
+This talk based heavily upon the following sources
+ - [Jenny Bryan's purrr tutorial](https://jennybc.github.io/purrr-tutorial/index.html)
+ - [Hadley Wickham and Garrett Grolemund's R4DS](http://r4ds.had.co.nz/)
+ - [Charlotte and Hadley Wickham's Datacamp Course](https://campus.datacamp.com/courses/writing-functions-in-r/)
+ - [Charlotte Wickham's purrr tutorial](https://github.com/cwickham/purrr-tutorial)
+
+---
+
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 library(tidyverse)
@@ -34,6 +42,13 @@ library(tidyverse)
 class: inverse, center, middle
 
 # Data structures in R
+
+---
+# Two types of vectors
+
+Atomic
+
+Lists
 
 ---
 
@@ -401,26 +416,40 @@ map_dbl(l, ~mean(.x, na.rm = TRUE))
 All return the same thing. 
 
 ---
-# Map use case #1: Read in files
 
-http://data.library.virginia.edu/getting-started-with-the-purrr-package-in-r/
+class: inverse, center, middle
 
-``` {r read_csv_s}
-#this will work if you clone the github repository
-fileloc <- file.path(getwd(), "stocks")
-#create a list of files to read in that end in csv
-files <- list.files(fileloc, pattern = "csv$", full.names = TRUE) 
-#make pretty names based upon the file names
-filenames <-  list.files(fileloc, pattern = "csv$")
-names(dat2) <- gsub("\\.csv", "", files)
-#this reads in each csv independently into a list
-dat2 <- map(files, read.csv)
-
-dat2
-
-```
+# Notebook Time
+Map examples
 
 ---
+
+# `map2` and `pmap`
+
+What if you need elements from more than one list? 
+
+For two lists use map2
+`map2(.x, .y, .f, ...)`
+
+For more, use pmap
+`pmap(.l, .f, ...)`
+
+
+---
+
+class: inverse, center, middle
+
+# Notebook Time
+`map2` and `pmap` examples
+
+
+---
+
+# walk
+
+If you're more interested in returning a side-effect than an object
+
+`walk`
 
 
 ---
