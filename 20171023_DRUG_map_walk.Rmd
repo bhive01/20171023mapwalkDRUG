@@ -32,8 +32,6 @@ library(tidyverse)
 
 - Why and when to write a function in R
 
-- Functional Programming
-
 - purrr::map
 
 - purrr::walk
@@ -127,8 +125,13 @@ Vectors and data types
 
 Three main ways to subset a List/df/tibble
 - `[` returns a list/df/tibble with those elements
+  - `mtcars[1]`
+  - `mtcars["mpg"]`
 - `[[` returns an element from list/df/tibble
-- `$` same as `[[`
+  - `mtcars[[1]]`
+  - `mtcars[["mpg"]]`
+- `$` same as `[[`, only for name
+  - `mtcars$mpg`
 
 There are many caveats and ways to do things:
 http://adv-r.had.co.nz/Subsetting.html
@@ -187,13 +190,16 @@ df$c <- (df$c - min(df$a, na.rm = TRUE)) /
 df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
   (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
 ```
+--
 No shame in doing this because it works, but it's error prone and lengthy. 
 
 ---
 
 # How many repeats is too many?
 
-Hadley's reasoning is that if you've got 3 copies of the same code then it's time to write a function. (I think that is reasonable.)
+Hadley's rule of thumb is that if you've got 3 copies of the same code then it's time to write a function. 
+--
+(I think that is reasonable.)
 
 
 
@@ -202,6 +208,8 @@ Also consider if you might reuse this again in another place. That counts as a r
 
 ---
 # Simplify and functionalize
+
+Follow along in the notebook if you want.
 
 ``` {r function01, error = TRUE, eval = FALSE}
 df$d <- (df$d - min(df$d, na.rm = TRUE)) /  
@@ -260,12 +268,12 @@ rescale_0_1 <- function(x) {
   (x - min(x, na.rm = TRUE)) /  
   diff(range(x, na.rm = TRUE))
 }
-out <- df
-out$a <- rescale_0_1(df$a)
-out$b <- rescale_0_1(df$b)
-out$c <- rescale_0_1(df$c)
-out$d <- rescale_0_1(df$d)
-out
+out <- df #make a copy so we don't have to remake df again
+out$a <- rescale_0_1(df$a) # scale column a
+out$b <- rescale_0_1(df$b) # scale column b
+out$c <- rescale_0_1(df$c) # scale column c
+out$d <- rescale_0_1(df$d) # scale column d
+out # let's look
 ```
 
 ---
@@ -290,7 +298,7 @@ http://style.tidyverse.org/
 
 ---
 
-# What if we could take those repeats away too? 
+# So... what about those repeats? 
 ``` {r still repeating, eval = FALSE}
 out <- df
 out$a <- rescale_0_1(df$a)
@@ -310,9 +318,9 @@ The function simplified the call, but we're copying and pasting again.
 For Loop
 
 ``` {r forloops}
-out <- df #make a copy to store scaled data
+out <- df #make a copy of df
 for (i in 1:ncol(df)) { # loop through each element
-  out[i] <- rescale_0_1(df[[i]]) #apply function and store it to out
+  out[i] <- rescale_0_1(df[[i]]) #apply function and store in out[]
 }
 out
 ```
@@ -348,18 +356,17 @@ class: inverse, center, middle
 ![](figures/tim-and-eric-mind-blown.gif)
 
 ---
-# purrr::map
+# purrr::map(.x, .f, ...)
 
-`map` iterates over any list and always returns a list
+`map` iterates over a list and returns a list
+  - `.x` list (or vector) to iterate over
+  - `.f` function to apply over that list
+  - `...` things that get passed from map() to .f
 
 ``` {r simplemap}
 l = list(a=1:10, b = 10:100)
 map(l, function(x) mean(x, na.rm = TRUE))
 ```
-Arguments/formals
-  - `.x` list (or vector) to iterate over
-  - `.f` function to apply over that list
-  - `...` things that get passed from map() to .f
 
 The names `.x` and `.f` are intentionally weird because they are unlikely to collide with other names passed through `...` to `.f`.
 ---
@@ -367,41 +374,54 @@ The names `.x` and `.f` are intentionally weird because they are unlikely to col
 # more maps
 
 Other types of `map` that return specific things
+  - `map` list
   - `map_lgl` logical 
   - `map_int` integer 
   - `map_dbl` double 
   - `map_chr` character 
   - `map_dfc` bind as columns into df
   - `map_dfr` bind as rows into df
-  
+---
+
+# Type Safe
+
+These specialized map functions are "type-safe" and will fail with incorrect return type.
+
 ``` {r rightmap}
 l = list(a=1:10, b = 10:100)
 map_dbl(l, function(x) mean(x, na.rm = TRUE))
+```
+``` {r okishmap, error = TRUE}
+map_chr(l, function(x) mean(x, na.rm = TRUE))
 ```
 
 ``` {r wrongmap, error = TRUE}
 map_lgl(l, function(x) mean(x, na.rm = TRUE))
 ```
 
-These functions are "type-safe" and will fail with incorrect return type.
-
 ---
 
-# Another example, assemble df from list output 
+# Assemble df from list output
+
+``` {r map_make_list, eval = FALSE}
+map(df, function(x) rescale_0_1(x)) # map over df return list
+```
+Less useful if you want to do something else with it.
+
 ``` {r map_dfc_fingerlickingood}
-map_dfc(df, function(x) rescale_0_1(x))#map over the columns in df
+map_dfc(df, function(x) rescale_0_1(x)) # map df return tibble
 ```
 
 ---
 
-# Function definition shortcuts
+# Alternate function calls for map/walk()
 
 Full anonymous function definition
 ``` {r functiondefintion, eval = FALSE}
 l = list(a=1:10, b = 10:100)
 map_dbl(l, function(x) mean(x, na.rm = TRUE))
 ```
-Function name only, parameters passed through `...`
+Function name only and pass parameters through `...`
 ``` {r shortdefintion, eval = FALSE}
 map_dbl(l, mean, na.rm = TRUE)
 ```
@@ -413,7 +433,7 @@ map_dbl(l, ~mean(., na.rm = TRUE))
 map_dbl(l, ~mean(.x, na.rm = TRUE))
 ```
 
-All return the same thing. 
+All return the same thing and you'll see all three when looking for help.
 
 ---
 
@@ -429,11 +449,15 @@ Map examples
 What if you need elements from more than one list? 
 
 For two lists use map2
-`map2(.x, .y, .f, ...)`
+
+  - `map2(.x, .y, .f, ...)`
 
 For more, use pmap
-`pmap(.l, .f, ...)`
 
+  - `pmap(.l, .f, ...)`
+
+
+Let's see some examples.
 
 ---
 
@@ -445,11 +469,44 @@ class: inverse, center, middle
 
 ---
 
-# walk
+# `walk` family
 
-If you're more interested in returning a side-effect than an object
+`walk(.x, .f, ...)`
+`walk2(.x, .y, .f, ...)`
+`pwalk(.l, .f, ...)`
 
-`walk`
+`walk()`, `walk2()`, and `pwalk()` have the same structure as their `map()` relatives, but .f is called for its side effects and .x is returned on the other side. 
+
+Returning .x means you can use it in further analysis in the same thread (`%>%`). 
+
+I have personally not had success doing this. 
+
+---
+
+class: inverse, center, middle
+
+# Notebook Time
+`walk` examples
 
 
 ---
+
+class: inverse
+
+# Thanks to:
+  - Package
+    - Hadley Wickham
+    - Lionel Henry
+  - Tutorials
+    - Package Devs
+    - Charlotte Wickham
+    - Jenny Bryan
+    - Garrett Grolemund
+  - Advice
+    - Noam Ross
+    - Steph Locke
+    - Jennifer Thompson
+
+
+--
+  - You for listening

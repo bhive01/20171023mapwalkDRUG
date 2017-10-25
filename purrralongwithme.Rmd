@@ -70,44 +70,53 @@ e <- list(a, b, c, d) #make a list
 e # check it twix
 
 #Lists can contain anything of any length
-#data.frame is a special type of list; things need to line up
+#data.frame is a special type of list
+# data.frame rows imply association so they need to line up
 
 data.frame(a, b) # uh oh
 
 a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA, NA, NA) # make it 8 like b
 df <- data.frame(a = a, b = b) # OH YEAH /Koolaidman.gif
 df 
-#tibbles are a strict type of data.frame
-as_tibble(df)
-# with slightly more informative printing
-```
+#tibbles are a more strict type of data.frame
+# with
+#     slightly more informative printing (not shown well here)
+#     strict behavior around subsetting `[` -> tibble `[[` vector
+#     does not partially match column names (this can get you into trouble)
 
+as_tibble(df)
+
+```
+# Back to presentation
 
 # Accessing elements inside vectors, lists, dataframes, and tibbles
 ``` {r list_df_tibble_subsetting, error = TRUE} 
-e <- list(a = a, b= b, c = c, d = d, e = list(1, "A")) #make a named list
 
-#vectors
+#atomic vectors
 a <- c(TRUE, FALSE, TRUE, FALSE, FALSE, NA) #logic vector 
+a
 a[1] 
 a[[1]] # does the same thing
-a[[[1]]] #lolwut are you doing?
+a[[[1]]] #lolwut R you doing?
 
-
+#lists
+list_example <- list(a = a, b= b, c = c, d = d, e = list(1, "A")) #make a named list
+list_example
 # single brackets returns a list with that element in it
 # can reference by location or by name
-e[1]
-e["a"]
+list_example[1]
+list_example["a"]
 
 # double brackets return a vector 
-e[[2]]
-e[["b"]]
+list_example[[2]]
+list_example[["b"]]
 
 #stack [['s it to peel the onion back
-e[["e"]][[2]]
+list_example[["e"]] # remove one layer
+list_example[["e"]][[2]] # remove the second layer
 
-#dolla dolla bills y'all (works liks [[, with named vectors)
-e$c
+#dolla dolla bills y'all (works like [[, with named vectors)
+list_example$c
 
 #same for dataframes
 mtcars[1]
@@ -122,27 +131,11 @@ tbbl[[2]]
 tbbl[["y"]]
 ```
 
-# The very basic basics of functions
 
-``` {r functionbasics}
-#basic struction is assignment, definition, arguments, body, output
-addxy <- function(x, y) {
-  out <- x+y
-  out
-}
+# Back to presentation
 
-formals(addxy)
-body(addxy)
-environment(addxy)
 
-addxy(1,2)
-
-# anonymous functions are not assigned, but are used in place
-# we will see this more later with dplyr and purrr
-function(x) {x+1}
-
-```
-
+# When to make a function in R
 ``` {r Y_make_a_function}
 #Simple dataframe
 df <- data.frame(
@@ -184,7 +177,6 @@ x <- (x - min(x, na.rm = TRUE)) /
   diff(range(x, na.rm = TRUE))
 ```
 
---
 ``` {r function04, error = TRUE, eval = FALSE}
 # rewrite as a function
 rescale_0_1 <- function(x) {
@@ -261,6 +253,13 @@ l = list(a=1:10, b = 10:100)
 map_dbl(l, function(x) mean(x, na.rm = TRUE))
 ```
 
+# You can coerce these to character so this works
+#   but I don't think this is very helpful
+``` {r okishmap}
+map_chr(l, function(x) mean(x, na.rm = TRUE))
+```
+
+
 # These are type-strict functions though
 # get it wrong and you'll know
 ``` {r wrongmap, error = TRUE}
@@ -273,7 +272,7 @@ map_lgl(l, function(x) mean(x, na.rm = TRUE))
 Based upon this tutorial
 http://data.library.virginia.edu/getting-started-with-the-purrr-package-in-r/
 
-``` {r simple_read_csvs}
+``` {r simple_read_csvs, message = FALSE}
 #this will work if you clone the github repository
 fileloc <- file.path(getwd(), "stocks")
 #create a list of files to read in that end in csv
@@ -286,17 +285,14 @@ dat2
 ```
 
 # Let's make it a function
-``` {r make_it_functional}
+``` {r make_it_functional, message = FALSE}
 fileloc <- file.path(getwd(), "stocks")
 
 read_folder <- function(folder) {
   # get files that end with csv or CSV
   files <- list.files(folder, pattern = "(csv|CSV)$", full.names = TRUE) 
-
   #this reads in each csv independently into a list
-  dat2 <- map(files, read_csv)
-  dat2 # this will return dat2 to global environment
-  
+  map(files, read_csv) # last thing is returned
 }
 
 read_folder(fileloc)
@@ -304,31 +300,29 @@ read_folder(fileloc)
 
 
 # What if you want to change the type of file you're reading?
-``` {r fancify}
+``` {r fancify, message = FALSE}
 fileloc <- file.path(getwd(), "stocks")
 
 read_folder <- function(folder, pattern, read_fun) {
   # get files that end with csv or CSV
   files <- list.files(folder, pattern = pattern, full.names = TRUE) 
-
   #this reads in each csv independently into a list
-  dat2 <- map(files, read_fun)
-  dat2 # this will return dat2 to global environment
-  
+  map(files, read_fun)
 }
 
-read_folder(folder = fileloc, pattern = "(csv|CSV)$", read_csv)
-
+read_folder(folder = fileloc, pattern = "(csv|CSV)$", read_fun = read_csv)
+# OR more succinctly
+# read_folder(fileloc, "(csv|CSV)$", read_csv)
 ```
 
 # We've got 3 independent datasets, this isn't always helpful
 # let's combine them into one, but we need to label them by their filenames
 
-``` {r combinify}
+``` {r combinify, message = FALSE}
 fileloc <- file.path(getwd(), "stocks")
 
 # This function reads a file and appends a column called "name" for ID
-read_fun <- function(file, FUN){
+read_fun <- function(file, FUN) {
 		dat <- FUN(file) # read in file
 		dat$name <- tools::file_path_sans_ext(basename(file)) #record the filename for later grouping
 		dat #bring data back
@@ -336,11 +330,10 @@ read_fun <- function(file, FUN){
 
 # This function reads a folder for files of given pattern
 # then applies the given read function to read them in read_fun
-read_files_bind <-
-	function(folder, pattern, FUN) {
-		# get files that end with csv or CSV
+read_files_bind <- 	function(folder, pattern, FUN) {
+    # get files that end with csv or CSV
     files <- list.files(folder, pattern = pattern, full.names = TRUE) 
-		map_dfr(files, read_fun, FUN)
+    map_dfr(files, read_fun, FUN)
   }
 
 # Read everything in at once and bind it all together
@@ -348,7 +341,7 @@ read_files_bind(folder = fileloc, pattern = "(csv|CSV)$", FUN = read_csv)
 ```
 
 # List columns
-# tidyr::nest() embeds tibbles as lists in a column
+# tidyr::nest() embeds tibbles in a column
 ``` {r nesting}
 cars_nested <-
   mtcars %>%            # motortrend car dataset
@@ -360,9 +353,7 @@ cars_nested
   
 # This is neat, but how to we interact with the nested data?
 # map!
-# let's make a linear model for each subset
-# then let's pull out the coeffiecients with broom
-# finally let's plot them
+## let's make a linear model for each subset, pull out the coeffiecients with broom, and plot them
 ``` {r model_extracts}
 library(broom)
 
@@ -386,11 +377,13 @@ ggplot() +
 ```
 
 
+#Back to presentation
+
 # Iterating over more than one list with map2 and pmap
 ``` {r map2_pmap_usage example}
 n =  list(5,10,20)
 mu = list(50,30,10)
-sd = list(0.1,0.2,0.3)
+sd = list(10,5,1)
 
 # how does it look as we go from map to map2 to pmap?
 map(n, rnorm)
@@ -425,6 +418,7 @@ pmap(list(mu, n, sd), function(mu, n, sd) rnorm(n, mu, sd))
 pmap(list(mu, n, sd), ~ rnorm(..2, ..1, ..3))
 ```
 
+#Back to Presentation
 
 
 # Walk/walk2/pwalk are used to output side-effects
@@ -467,15 +461,17 @@ walk2(mtc_plot_n_save$plot, mtc_plot_n_save$filepath, ~ ggsave(.y, .x)) # save t
 
 
 ``` {r pwalk_output_all_the_things}
+
+# make a simple plotting function
+plot_points <- function(t) ggplot(t, aes(mpg, wt)) + geom_point()
+
+#function that prints cylinder info, ggplot, and table 
 print_func <-
   function(info, plot, table) {
     print(paste0("This is for ", info, " cylinders.\n"))
     print(plot)
     print(table)
   }
-
-# make a simple plotting function
-plot_points <- function(t) ggplot(t, aes(mpg, wt)) + geom_point()
 
 mtc_plot_n_save <-
   mtcars %>%                 # motortrend car dataset
@@ -488,3 +484,4 @@ mtc_plot_n_save <-
 pwalk(list(info = mtc_plot_n_save$cyl, plot = mtc_plot_n_save$plot, table = mtc_plot_n_save$data), print_func) 
 ```
 
+# Back to Presentation
