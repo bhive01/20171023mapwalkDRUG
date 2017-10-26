@@ -156,7 +156,7 @@ function01 <- function(argument1, argument2, ...) {
 }
 ```
 
-- Assignment `function1 <-`
+- Assignment `function01 <-`
 - Function function `function() {}`
 - formals or arguments
 - Body
